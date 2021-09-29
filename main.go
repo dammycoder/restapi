@@ -6,6 +6,22 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+
+type todolist struct {
+	name string `json:"name"`
+	id int  `json:"id"`
+}
+
+
+ type todoitem struct{
+	 name string `json :"name"`
+	 id int `json:"id"`
+	 todolistid int `json:"id"`
+	 isdone bool `json:"isdone"`
+ }
+
+var todolistcollection map [string] interface{}
+
 func main() {
 	r := gin.Default()
 
@@ -17,22 +33,30 @@ func main() {
 	r.GET("/todolist/:todolistID/:todoITEM",todoitems)
 	r.POST("/todolist/:todolistID/:todoITEM",addtodoitem)
 	r.PATCH("/:todoITEM",marktodoitem)
-	r.Run("127.0.0.1:8888")
+	r.Run("127.0.0.1:8080")
 }
 
 func listTodoList(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, map[string]interface{}{
-		"data": []string{},
+	ctx.JSON(http.StatusOK, gin.H{
+		"data": todolistcollection,
 	})
 }
 
 func createTodoList(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, map[string]interface{}{
-		"id": 1,
+	data := todolist{}
+	if err := ctx.ShouldBindJSON(&h), if err != nil{
+		ctx.JSON(200,err)
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"name" : h.name,
+		"id":h.id,
 	})
 }
 
 func deleteTodoList(ctx *gin.Context) {
+
+	
 	ctx.JSON(http.StatusOK, map[string]interface{}{
 		"id": ctx.Param("todoListID"),
 	})
