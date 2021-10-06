@@ -44,13 +44,13 @@ func listTodoList(ctx *gin.Context) {
 
 func createTodoList(ctx *gin.Context) {
 	data := todolist{}
-	if err := ctx.ShouldBindJSON(&h), if err != nil{
+	if  err := ctx.ShouldBindJSON(&data);if err != nil{
 		ctx.JSON(200,err)
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
-		"name" : h.name,
-		"id":h.id,
+		"name" : data.name,
+		"id":data.id,
 	})
 }
 
